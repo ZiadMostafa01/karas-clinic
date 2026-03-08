@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { MessageSquare, X, Send, RotateCcw } from "lucide-react";
-import logo from "../assets/images/Logo_main_light.png";
+import logo from "/src/assets/images/Logo_main_light.png";
 
 // ─── Clinic Knowledge Base ──────────────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Kara, a friendly and knowledgeable virtual assistant for Karas Veterinary Clinics in Dubai.

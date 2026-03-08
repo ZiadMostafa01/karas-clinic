@@ -1,5 +1,5 @@
-import img1 from "../../assets/images/jlt-clinic.jpeg";
-import img2 from "../../assets/images/business-bay-clinic.jpeg";
+import img1 from "/src/assets/images/jlt-clinic.jpeg";
+import img2 from "/src/assets/images/business-bay-clinic.jpeg";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 

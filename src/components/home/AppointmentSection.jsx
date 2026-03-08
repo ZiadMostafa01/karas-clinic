@@ -1,4 +1,4 @@
-import hero from "../../assets/images/510D8482-A15C-4A2A-9DEC-3FA38D09D8ED.png";
+import hero from "/src/assets/images/510D8482-A15C-4A2A-9DEC-3FA38D09D8ED.png";
 
 function AppointmentSection() {
   return (

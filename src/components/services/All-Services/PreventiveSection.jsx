@@ -1,11 +1,11 @@
 import { ArrowRight } from "lucide-react";
-import img1 from "../../../assets/images/2F3592F6-7A0E-45D6-9035-A2B6384BAF5E.PNG";
-import img2 from "../../../assets/images/510D8482-A15C-4A2A-9DEC-3FA38D09D8ED.PNG";
-import img3 from "../../../assets/images/FFAA28D0-D6A0-4C47-80A8-E1529C343958.PNG";
-import img4 from "../../../assets/images/472602C6-697C-48D8-83B7-CD7C3E69FEB9.PNG";
-import img5 from "../../../assets/images/Gemini_Generated_Image_v6fem9v6fem9v6fe.PNG";
-import img6 from "../../../assets/images/6A027399-A9F6-4A45-99F2-1E0B61B4373C.PNG";
-import img7 from "../../../assets/images/30D5BFD7-AD81-4E94-852B-50150C494D6A.PNG";
+import img1 from "/src/assets/images/2F3592F6-7A0E-45D6-9035-A2B6384BAF5E.PNG";
+import img2 from "/src/assets/images/510D8482-A15C-4A2A-9DEC-3FA38D09D8ED.PNG";
+import img3 from "/src/assets/images/FFAA28D0-D6A0-4C47-80A8-E1529C343958.PNG";
+import img4 from "/src/assets/images/472602C6-697C-48D8-83B7-CD7C3E69FEB9.PNG";
+import img5 from "/src/assets/images/Gemini_Generated_Image_v6fem9v6fem9v6fe.PNG";
+import img6 from "/src/assets/images/6A027399-A9F6-4A45-99F2-1E0B61B4373C.PNG";
+import img7 from "/src/assets/images/30D5BFD7-AD81-4E94-852B-50150C494D6A.PNG";
 import { Link } from "react-router-dom";
 
 const PreventiveCard = ({

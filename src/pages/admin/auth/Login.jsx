@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/admin/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../config/api";
 import logo from "/src/assets/images/logo_main_light.png";
-import logoDark from "/src/assets/images/logo_main.png";/src
+import logoDark from "/src/assets/images/logo_main.png";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

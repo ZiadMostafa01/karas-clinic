@@ -1,24 +1,24 @@
-import doctor1 from "../assets/images/doctors/Ajla Zahirovic.jpg";
-import doctor2 from "../assets/images/doctors/Abdullah Ghonim.jpg";
-import doctor3 from "../assets/images/doctors/Milana Skoric.jpg";
-import doctor4 from "../assets/images/doctors/Dr. Mostafa Zein.jpg";
-import doctor5 from "../assets/images/doctors/Usama Rehman.jpg";
-import nurse1 from "../assets/images/doctors/Mohamed Bekhit.jpg";
-import nurse2 from "../assets/images/doctors/Alfredo Avelino.jpg";
-import nurse3 from "../assets/images/doctors/Stepan Visaya.jpg";
-import nurse4 from "../assets/images/doctors/Emmanuel Yap.jpg";
-import nurse5 from "../assets/images/doctors/Jyrus Lapuz.jpg";
-import nurse6 from "../assets/images/doctors/Linda Asobo.jpg";
-import animalHandler1 from "../assets/images/doctors/Nalding Lloza.jpg";
-import animalHandler2 from "../assets/images/doctors/Romel Mabborang.jpg";
-import animalHandler3 from "../assets/images/doctors/Carlo Nodalo.jpg";
-import animalHandler4 from "../assets/images/doctors/Mark Dylan Marcelo.jpg";
-import Administrator1 from "../assets/images/doctors/Imma Lozano.jpg";
-import Administrator2 from "../assets/images/doctors/Janna Barrios.jpg";
-import Administrator3 from "../assets/images/doctors/John Francis Labtingao.jpg";
-import Administrator4 from "../assets/images/doctors/Thomas Ypil.jpg";
-import Administrator5 from "../assets/images/doctors/Wael Ragab.jpg";
-import Administrator6 from "../assets/images/doctors/Angelo Quinones.jpg";
+import doctor1 from "/src/assets/images/doctors/Ajla Zahirovic.jpg";
+import doctor2 from "/src/assets/images/doctors/Abdullah Ghonim.jpg";
+import doctor3 from "/src/assets/images/doctors/Milana Skoric.jpg";
+import doctor4 from "/src/assets/images/doctors/Dr. Mostafa Zein.jpg";
+import doctor5 from "/src/assets/images/doctors/Usama Rehman.jpg";
+import nurse1 from "/src/assets/images/doctors/Mohamed Bekhit.jpg";
+import nurse2 from "/src/assets/images/doctors/Alfredo Avelino.jpg";
+import nurse3 from "/src/assets/images/doctors/Stepan Visaya.jpg";
+import nurse4 from "/src/assets/images/doctors/Emmanuel Yap.jpg";
+import nurse5 from "/src/assets/images/doctors/Jyrus Lapuz.jpg";
+import nurse6 from "/src/assets/images/doctors/Linda Asobo.jpg";
+import animalHandler1 from "/src/assets/images/doctors/Nalding Lloza.jpg";
+import animalHandler2 from "/src/assets/images/doctors/Romel Mabborang.jpg";
+import animalHandler3 from "/src/assets/images/doctors/Carlo Nodalo.jpg";
+import animalHandler4 from "/src/assets/images/doctors/Mark Dylan Marcelo.jpg";
+import Administrator1 from "/src/assets/images/doctors/Imma Lozano.jpg";
+import Administrator2 from "/src/assets/images/doctors/Janna Barrios.jpg";
+import Administrator3 from "/src/assets/images/doctors/John Francis Labtingao.jpg";
+import Administrator4 from "/src/assets/images/doctors/Thomas Ypil.jpg";
+import Administrator5 from "/src/assets/images/doctors/Wael Ragab.jpg";
+import Administrator6 from "/src/assets/images/doctors/Angelo Quinones.jpg";
 
 export const allStaffData = [ 
   {

@@ -1,6 +1,6 @@
 import { Phone, MapPin, Clock, ArrowRight, Mail } from "lucide-react";
-import img1 from "../../assets/images/business-bay-clinic.jpeg";
-import img2 from "../../assets/images/jlt-clinic.jpeg";
+import img1 from "/src/assets/images/business-bay-clinic.jpeg";
+import img2 from "/src/assets/images/jlt-clinic.jpeg";
 import PagesHeader from "../../components/PagesHeader";
 
 const ClinicCard = ({ clinic }) => {

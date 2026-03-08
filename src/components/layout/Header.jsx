@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
-import logo from "../../assets/images/Logo_main.png";
+import logo from "/src/assets/images/Logo_main.png";
 import ProgressBar from "./ProgressBar";
 import { useEffect, useState } from "react";
 
