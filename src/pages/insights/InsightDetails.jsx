@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
-import logo from "../../assets/images/logo_main.png";
 
 const insightsData = [
   {
