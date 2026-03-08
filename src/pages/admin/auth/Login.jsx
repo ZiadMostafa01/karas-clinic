@@ -3,8 +3,8 @@ import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useAuth } from "../../../context/admin/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../../config/api";
-import logo from "../../../assets/images/logo_main_light.png";
-import logoDark from "../../../assets/images/logo_main.png";
+import logo from "/src/assets/images/logo_main_light.png";
+import logoDark from "/src/assets/images/logo_main.png";/src
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

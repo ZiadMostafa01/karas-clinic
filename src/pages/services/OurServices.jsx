@@ -1,4 +1,4 @@
-import img from "../../assets/images/08DA5130-6A39-4636-9D63-6B3FF20B4580.png";
+import img from "/src/assets/images/08DA5130-6A39-4636-9D63-6B3FF20B4580.png";
 import PagesHeader from "../../components/PagesHeader";
 import PreventiveSection from "../../components/services/All-Services/PreventiveSection";
 function OurServices() {
