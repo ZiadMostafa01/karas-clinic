@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --karas_aubergine: #39164f;
+  --karas_aubergine_ink: #2a0f3b;
+  --karas_text: #555;
+
+  --karas_paper: #faf7f4;
+  --karas_surface: #ffffff;
+  --karas_mist: #f3eeea;
+
+  /* --karas_text: #3b3a3a; */
+  --karas_text_strong: #1f1e1e;
+  --karas_border: #e6e0da;
+  
+  --primary: #72529b;
+  --primary1: #43306d;
+  --secondary: #f5d7df;
+  --secondary1: #f6844d;
+  --icon: #43941f;
+
+}
+
+
+body {
+  font-family: "Source Sans 3", sans-serif;
+}
+.font-heading {
+  font-family: "Fraunces", serif;
+}
+
+
+/* ChatBot */
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+.animate-bounce { animation: bounce 1.2s infinite; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-400 { animation-delay: 0.4s; }
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #ddd;
+  border-radius: 10px;
+}
