@@ -1,4 +1,4 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -11,8 +11,8 @@ import {
   Headset,
   Stethoscope,
   PawPrint,
-} from "lucide-react"; 
-import logo from "../../assets/images/logo_main_light.png";
+} from "lucide-react";
+import logo from "@/assets/images/logo_main_light.png";
 import { useAuth } from "../../context/admin/AuthContext";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
@@ -107,8 +107,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   <div>
                     <button
                       onClick={() => {
-                        toggleSubmenu(item.name); 
-                        navigate("/admin/team/doctors"); 
+                        toggleSubmenu(item.name);
+                        navigate("/admin/team/doctors");
                       }}
                       className={`w-full cursor-pointer ${
                         window.location.pathname.includes("/admin/team")
