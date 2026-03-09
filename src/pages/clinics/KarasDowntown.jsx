@@ -1,5 +1,5 @@
 import img from "/src/assets/images/business-bay-clinic.jpeg";
-import img1 from "/src/assets/images/F3A4AD9D-25C2-4744-AA48-95979AC7778D.png";
+import img1 from "/src/assets/images/downtown-image.png";
 import LocationPurpose from "../../components/clinics/LocationPurpose";
 import ApproachSection from "../../components/clinics/ApproachSection";
 import AppointmentSection from "../../components/home/AppointmentSection";

@@ -1,4 +1,4 @@
-import img from "/src/assets/images/2BC11EA7-18F0-4569-9E47-9BE2A7F6ABC0.PNG";
+import img from "/src/assets/images/pcr-image.PNG";
 import PagesHeader from "../../components/PagesHeader";
 import ComparisonSection from "../../components/services/PCR-Testing/ComparisonSection";
 import DiagnosticSection from "../../components/services/PCR-Testing/DiagnosticSection";
