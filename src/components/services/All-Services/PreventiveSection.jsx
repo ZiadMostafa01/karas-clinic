@@ -1,11 +1,11 @@
 import { ArrowRight } from "lucide-react";
-import img1 from "/src/assets/images/services/services1.PNG";
-import img2 from "/src/assets/images/services/services2.PNG";
-import img3 from "/src/assets/images/services/services3.PNG";
-import img4 from "/src/assets/images/services/services4.PNG";
-import img5 from "/src/assets/images/services/services5.PNG";
-import img6 from "/src/assets/images/services/services6.PNG";
-import img7 from "/src/assets/images/services/services7.PNG";
+import img1 from "@/assets/images/services/services1.PNG";
+import img2 from "@/assets/images/services/services2.PNG";
+import img3 from "@/assets/images/services/services3.PNG";
+import img4 from "@/assets/images/services/services4.PNG";
+import img5 from "@/assets/images/services/services5.PNG";
+import img6 from "@/assets/images/services/services6.PNG";
+import img7 from "@/assets/images/services/services7.PNG";
 
 import { Link } from "react-router-dom";
 

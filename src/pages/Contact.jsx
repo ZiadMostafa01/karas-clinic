@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
-import img from "/src/assets/images/contact-image.jpeg";
+import img from "@/assets/images/contact-image.jpeg";
 import PagesHeader from "../components/PagesHeader";
 
 // ─── Branch email mapping ─────────────────────────────────────────────────────

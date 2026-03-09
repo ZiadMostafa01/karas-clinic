@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import shape from "/src/assets/images/download.png";
+import shape from "@/assets/images/download.png";
 const AnnouncementBar = () => {
   const [isVisible, setIsVisible] = useState(false);
 

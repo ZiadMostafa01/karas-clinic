@@ -1,4 +1,4 @@
-import hero from "/src/assets/images/appointment-image.png";
+import hero from "@/assets/images/appointment-image.png";
 
 function AppointmentSection() {
   return (

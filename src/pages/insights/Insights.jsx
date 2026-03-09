@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "/src/assets/images/logo_main.png";
+import logo from "@/assets/images/logo_main.png";
 import PagesHeader from "../../components/PagesHeader";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";

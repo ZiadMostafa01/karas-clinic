@@ -1,5 +1,5 @@
-import img from "/src/assets/images/jlt-clinic.jpeg";
-import img1 from "/src/assets/images/JLT-image.jpg";
+import img from "@/assets/images/jlt-clinic.jpeg";
+import img1 from "@/assets/images/JLT-image.jpg";
 import ApproachSection from "../../components/clinics/ApproachSection";
 import PagesHeader from "../../components/PagesHeader";
 import AppointmentSection from "../../components/home/AppointmentSection";

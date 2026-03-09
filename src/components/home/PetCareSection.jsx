@@ -1,4 +1,4 @@
-import img1 from "/src/assets/images/61B62C43-EDFF-406C-B6CA-20940299BB03.png";
+import img1 from "@/assets/images/61B62C43-EDFF-406C-B6CA-20940299BB03.png";
 
 const servicesLeft = [
   "We do not practice reactive medicine.",
