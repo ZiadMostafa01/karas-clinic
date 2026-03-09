@@ -1,4 +1,4 @@
-import img from "/src/assets/images/services-image.png";
+import img from "/src/assets/images/services-image.PNG";
 import PagesHeader from "../../components/PagesHeader";
 import PreventiveSection from "../../components/services/All-Services/PreventiveSection";
 function OurServices() {
