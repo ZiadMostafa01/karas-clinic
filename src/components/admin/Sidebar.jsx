@@ -12,7 +12,7 @@ import {
   Stethoscope,
   PawPrint,
 } from "lucide-react";
-import logo from "@/assets/images/logo_main_light.png";
+import logo from "@/assets/images/Logo_main_light.png";
 import { useAuth } from "../../context/admin/AuthContext";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
