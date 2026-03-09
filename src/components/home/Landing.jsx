@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import shape from "@/assets/images/shape-services-768x560.WEBP";
+import shape from "@/assets/images/landing-shape.WEBP";
 
 function Landing() {
   return (
