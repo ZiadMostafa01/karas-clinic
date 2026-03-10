@@ -22,8 +22,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
   const handleLogout = () => {
+    // 1. مسح البيانات من الـ Context والـ Storage
     logout();
-    navigate("/");
+
+    // 2. توجيه إجباري لصفحة الهوم الرئيسية
+    // نستخدم window.location بدلاً من navigate لمنع الـ AuthGuard من تحويلك للـ login
+    window.location.href = "/";
   };
 
   const toggleSubmenu = (name) => {
