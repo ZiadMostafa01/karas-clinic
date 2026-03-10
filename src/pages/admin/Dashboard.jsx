@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import DashboardStats from "../../components/admin/dashboard/DashboardStats";
 import { API_BASE_URL } from "../../config/api";
+import AnnouncementManagement from "../../components/admin/dashboard/AnnouncementManagement";
 
 export default function Dashboard() {
   const [doctors, setDoctors] = useState([]);
@@ -20,14 +21,15 @@ export default function Dashboard() {
         ];
 
         const results = await Promise.allSettled(
-          endpoints.map(endpoint => fetch(endpoint.url).then(res => res.json()))
+          endpoints.map((endpoint) =>
+            fetch(endpoint.url).then((res) => res.json()),
+          ),
         );
 
         if (results[0].status === "fulfilled") setDoctors(results[0].value);
         if (results[1].status === "fulfilled") setNurses(results[1].value);
         if (results[2].status === "fulfilled") setHandlers(results[2].value);
         if (results[3].status === "fulfilled") setAdmins(results[3].value);
-
       } catch (error) {
         console.error("Error fetching dashboard stats:", error);
       } finally {
@@ -39,7 +41,11 @@ export default function Dashboard() {
   }, []);
 
   if (loading) {
-    return <div className="p-10 text-center italic font-serif">Updating Overview...</div>;
+    return (
+      <div className="p-10 text-center italic font-serif">
+        Updating Overview...
+      </div>
+    );
   }
 
   return (
@@ -57,7 +63,11 @@ export default function Dashboard() {
           admins={admins}
         />
       </div>
-      
+      <div className="mt-4">
+        {/* دلوقتي الـ Stats هتحسب الـ length تلقائياً من الـ arrays دي */}
+        <AnnouncementManagement />
+      </div>
+
       {/* هنا ممكن تضيف جداول مختصرة أو تنبيهات لاحقاً */}
     </div>
   );

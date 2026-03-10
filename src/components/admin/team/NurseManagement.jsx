@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; // أضفنا axios
 import { API_BASE_URL } from "../../../config/api";
 import Alert from "../../ui/Alert";
 
@@ -8,7 +9,7 @@ export default function NurseManagement() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [nurseToDelete, setNurseToDelete] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  
+
   // حالة الـ Alert
   const [alert, setAlert] = useState(null);
 
@@ -36,9 +37,9 @@ export default function NurseManagement() {
 
   const fetchNurses = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/nurses`);
-      const data = await res.json();
-      setNurses(data);
+      // Axios يحول النتيجة تلقائياً لـ JSON
+      const res = await axios.get(`${API_BASE_URL}/api/nurses`);
+      setNurses(res.data);
     } catch (err) {
       console.error("Failed to fetch nurses:", err);
     }
@@ -102,9 +103,6 @@ export default function NurseManagement() {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Full Name is required";
     if (!formData.role.trim()) newErrors.role = "Role/Title is required";
-    if (!formData.education.trim()) newErrors.education = "Education is required";
-    if (!formData.about.trim()) newErrors.about = "Bio is required";
-    if (!formData.areasOfFocus.trim()) newErrors.areasOfFocus = "Focus areas are required";
 
     if (!formData.id && !imageFile) {
       newErrors.image = "Profile photo is required";
@@ -127,51 +125,39 @@ export default function NurseManagement() {
     if (imageFile) fd.append("image", imageFile);
 
     try {
-      let url = `${API_BASE_URL}/api/nurses`;
-      let method = "POST";
-
+      let res;
       if (formData.id) {
-        url = `${API_BASE_URL}/api/nurses/${formData.id}`;
-        method = "PUT";
-      }
-
-      const res = await fetch(url, {
-        method: method,
-        body: fd,
-      });
-
-      if (res.ok) {
-        setIsModalOpen(false);
-        fetchNurses();
-        showAlert(
-          "success", 
-          formData.id ? "Profile Updated" : "Nurse Registered", 
-          `${formData.name} has been saved successfully.`
-        );
+        // تحديث ممرض موجود (PUT)
+        res = await axios.put(`${API_BASE_URL}/api/nurses/${formData.id}`, fd);
       } else {
-        showAlert("error", "Error", "Failed to save data. Please try again.");
+        // إضافة ممرض جديد (POST)
+        res = await axios.post(`${API_BASE_URL}/api/nurses`, fd);
       }
+
+      // Axios يعتبر أي كود 2xx نجاح
+      setIsModalOpen(false);
+      fetchNurses();
+      showAlert(
+        "success",
+        formData.id ? "Profile Updated" : "Nurse Registered",
+        `${formData.name} has been saved successfully.`,
+      );
     } catch (err) {
       console.error("Failed to save nurse:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      // Axios يمسك أخطاء السيرفر (4xx, 5xx) هنا تلقائياً
+      showAlert("error", "Error", "Failed to save data. Please try again.");
     }
   };
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/nurses/${nurseToDelete.id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        setIsDeleteModalOpen(false);
-        fetchNurses();
-        showAlert("success", "Deleted", "Nurse profile has been removed.");
-      } else {
-        showAlert("error", "Error", "Failed to delete nurse.");
-      }
+      await axios.delete(`${API_BASE_URL}/api/nurses/${nurseToDelete.id}`);
+      setIsDeleteModalOpen(false);
+      fetchNurses();
+      showAlert("success", "Deleted", "Nurse profile has been removed.");
     } catch (err) {
       console.error("Failed to delete nurse:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      showAlert("error", "Error", "Failed to delete nurse.");
     }
   };
 
@@ -180,7 +166,11 @@ export default function NurseManagement() {
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
         <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
-          <Alert variant={alert.variant} title={alert.title} message={alert.message} />
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+          />
         </div>
       )}
 
@@ -206,10 +196,10 @@ export default function NurseManagement() {
           {nurses.map((nurse) => (
             <div
               key={nurse.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-5 gap-4"
+              className="flex flex-col  sm:flex-row text-center sm:text-start sm:items-center justify-between p-5 gap-4"
             >
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
                   {nurse.imageUrl ? (
                     <img
                       src={`${API_BASE_URL}${nurse.imageUrl}`}
@@ -222,7 +212,7 @@ export default function NurseManagement() {
                 </div>
                 <div>
                   <h5 className="font-semibold text-gray-800">{nurse.name}</h5>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                       {nurse.title}
                     </span>
@@ -421,7 +411,7 @@ export default function NurseManagement() {
                   onClick={handleSave}
                   className="px-8 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 cursor-pointer"
                 >
-                  {formData.id ? "Update Profile" : "Save Profile"}
+                  {formData.id ? "Update" : "Save"}
                 </button>
               </div>
             </form>

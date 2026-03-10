@@ -7,7 +7,7 @@ function MainLayout() {
   return (
     <>
       <Header />
-      {/* <AnnouncementBar /> */}
+      <AnnouncementBar />
       <main>
         <Outlet />
       </main>

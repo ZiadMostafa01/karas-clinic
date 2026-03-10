@@ -207,7 +207,7 @@ function Header() {
                     onClick={() => setMobileMenu(false)}
                     className={getSubMobileClass}
                   >
-                    Our Services
+                    Clinical Care
                   </NavLink>
                   <svg
                     aria-hidden="true"
@@ -223,7 +223,7 @@ function Header() {
                     onClick={() => setMobileMenu(false)}
                     className={getSubMobileClass}
                   >
-                    All Services
+                    How We Practice{" "}
                   </NavLink>
                   <NavLink
                     to="/pcr-testing"
@@ -231,6 +231,13 @@ function Header() {
                     className={getSubMobileClass}
                   >
                     PCR Testing
+                  </NavLink>
+                  <NavLink
+                    to="/care-plan"
+                    onClick={() => setMobileMenu(false)}
+                    className={getSubMobileClass}
+                  >
+                    Care Plans{" "}
                   </NavLink>
                 </div>
               </details>
@@ -241,7 +248,7 @@ function Header() {
                 onClick={() => setMobileMenu(false)}
                 className={getMobileNavClass}
               >
-                Our Team
+                Karas Team{" "}
               </NavLink>
 
               {/* Clinics Dropdown */}
@@ -280,7 +287,13 @@ function Header() {
                 </div>
               </details>
 
-              {/* Contact Us */}
+              <NavLink
+                to="/insights"
+                onClick={() => setMobileMenu(false)}
+                className={getMobileNavClass}
+              >
+                Insights{" "}
+              </NavLink>
               <NavLink
                 to="/contact"
                 onClick={() => setMobileMenu(false)}

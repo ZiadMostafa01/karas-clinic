@@ -84,17 +84,7 @@ const Login = () => {
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <label className="text-sm font-semibold text-gray-700">
-                    Password
-                  </label>
-                  <button
-                    type="button"
-                    className="text-xs text-[var(--karas_aubergine)] hover:underline font-bold"
-                  >
-                    Forgot Password?
-                  </button>
-                </div>
+               
                 <div className="relative">
                   <Lock
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"

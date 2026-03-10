@@ -1,80 +1,53 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "@/assets/images/Logo_main.png";
 import PagesHeader from "../../components/PagesHeader";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-
-const insightsData = [
-  {
-    id: 1,
-    title: "Winter Nutrition Guide",
-    content:
-      "During colder months, pets often burn more energy to maintain their body temperature. We recommend increasing their protein intake by 10% and ensuring their water is always at room temperature. Avoid overfeeding, as indoor pets might be less active. Stick to high-quality fats like Omega-3 to keep their coat thick and healthy against the dry winter air.",
-    date: "March 5, 2026",
-    category: "Nutrition",
-    image:
-      "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 2,
-    title: "Understanding Pet Body Language",
-    content:
-      "A wagging tail doesn't always mean a happy dog. If the tail is stiff and moving slowly, it might indicate tension. Similarly, for cats, flattened ears are a clear sign of stress or fear. Recognizing these silent signals early helps prevent anxiety-driven behavior and strengthens the bond between you and your pet. Always approach a tensed pet from the side, never head-on.",
-    date: "March 1, 2026",
-    category: "Behavior",
-    image:
-      "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 3,
-    title: "Hydration Hacks for Cats",
-    content:
-      "Many cats are prone to kidney issues because they don't drink enough water. To encourage hydration, try using a water fountain instead of a still bowl; cats prefer running water. You can also add a tablespoon of warm water to their wet food. Keep the water bowl away from their litter box, as cats are naturally inclined to keep their 'kill' and 'drink' areas separate for hygiene.",
-    date: "February 20, 2026",
-    category: "Health Tips",
-    image:
-      "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 4,
-    title: "Puppy Socialization Basics",
-    content:
-      "The first 16 weeks are crucial for a puppy's social development. Safely introduce them to different sounds, surfaces, and friendly people. This prevents future fear-based aggression.",
-    date: "February 15, 2026",
-    category: "Training",
-    image:
-      "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 5,
-    title: "Dental Care for Seniors",
-    content:
-      "Older pets often suffer from gum disease. Daily brushing and dental chews can add years to their life by preventing bacteria from entering the bloodstream.",
-    date: "February 10, 2026",
-    category: "Health Tips",
-    image:
-      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 6,
-    title: "The Benefits of Routine",
-    content:
-      "Pets crave predictability. Feeding and walking your dog at the same time every day reduces cortisol levels and helps with anxiety issues.",
-    date: "February 5, 2026",
-    category: "Behavior",
-    image:
-      "https://images.unsplash.com/photo-1534361960057-19889db9621e?auto=format&fit=crop&q=80&w=800",
-  },
-];
+import { API_BASE_URL } from "../../config/api"; // تأكد من المسار الصحيح للـ config
 
 const Insights = () => {
+  const [insightsData, setInsightsData] = useState([]);
   const [visibleCount, setVisibleCount] = useState(3);
+  const [loading, setLoading] = useState(true);
+
+  // جلب البيانات من الـ API
+  const fetchInsights = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/Insights`);
+      const data = await res.json();
+      // ترتيب البيانات بحيث الأحدث يظهر الأول (اختياري)
+      setInsightsData(data);
+      setLoading(false);
+    } catch (err) {
+      console.error("Failed to fetch insights:", err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchInsights();
+  }, []);
+
+  // وظيفة لتنسيق التاريخ
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
 
   const handleShowMore = () => {
     setVisibleCount((prevCount) => prevCount + 3);
   };
 
   const currentInsights = insightsData.slice(0, visibleCount);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--karas_paper)]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--karas_aubergine)]"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--karas_paper)] py-10 px-6 md:px-12 font-sans">
@@ -93,9 +66,13 @@ const Insights = () => {
           >
             <div className="w-full h-64 md:h-auto md:w-[40%] relative overflow-hidden bg-gray-100">
               <img
-                src={item.image}
+                src={
+                  item.imageUrl
+                    ? `${API_BASE_URL}${item.imageUrl}`
+                    : "https://via.placeholder.com/800x600?text=No+Image"
+                }
                 alt={item.title}
-                className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700 md:absolute md:inset-0"
+                className="w-full h-full object-cover md:absolute md:inset-0"
               />
             </div>
 
@@ -103,10 +80,10 @@ const Insights = () => {
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-[10px] font-bold text-[#39164f] uppercase tracking-[0.2em] bg-[#39164f]/5 px-4 py-1.5 rounded-md">
-                    {item.category}
+                    {item.type || "General"}
                   </span>
                   <span className="text-[12px] text-gray-400 font-medium">
-                    {item.date}
+                    {formatDate(item.date)}
                   </span>
                 </div>
 
@@ -115,16 +92,14 @@ const Insights = () => {
                 </h2>
 
                 <p className="text-[#555] text-[17px] leading-[1.8] mb-8 italic line-clamp-3">
-                  "{item.content}"
+                  "{item.description}"
                 </p>
               </div>
 
               <div className="pt-6 border-t border-gray-50 flex flex-col sm:flex-row gap-4 items-center justify-between mt-auto">
-                <img
-                  src={logo}
-                  className="w-32 md:w-36 object-contain hidden sm:block"
-                  alt="Karas Logo"
-                />
+                <span className="font-bold text-[var(--karas_aubergine)]">
+                  Karas Veterinary Clinic
+                </span>
                 <Link
                   to={`/insights/${item.id}`}
                   className="cursor-pointer flex items-center group justify-center gap-2 bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white px-8 py-3 rounded-lg text-sm font-bold transition-all shadow-lg shadow-[#39164f]/20"
@@ -136,6 +111,12 @@ const Insights = () => {
             </div>
           </article>
         ))}
+
+        {insightsData.length === 0 && (
+          <div className="text-center py-20 text-gray-400 italic">
+            No insights available at the moment.
+          </div>
+        )}
       </div>
 
       {visibleCount < insightsData.length && (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; // استيراد اكسيوس
 import { API_BASE_URL } from "../../../config/api";
 import Alert from "../../ui/Alert";
 
@@ -8,7 +9,7 @@ export default function AnimalHandlersManagement() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [handlerToDelete, setHandlerToDelete] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  
+
   // حالة الـ Alert
   const [alert, setAlert] = useState(null);
 
@@ -34,11 +35,11 @@ export default function AnimalHandlersManagement() {
     image: null,
   });
 
+  // Fetch Handlers باستخدام Axios
   const fetchHandlers = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/animalhandlers`);
-      const data = await res.json();
-      setHandlers(data);
+      const response = await axios.get(`${API_BASE_URL}/api/animalhandlers`);
+      setHandlers(response.data);
     } catch (err) {
       console.error("Failed to fetch handlers:", err);
     }
@@ -102,9 +103,6 @@ export default function AnimalHandlersManagement() {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Full Name is required";
     if (!formData.role.trim()) newErrors.role = "Role/Title is required";
-    if (!formData.education.trim()) newErrors.education = "Education is required";
-    if (!formData.about.trim()) newErrors.about = "Bio is required";
-    if (!formData.areasOfFocus.trim()) newErrors.areasOfFocus = "Focus areas are required";
 
     if (!formData.id && !imageFile) {
       newErrors.image = "Profile photo is required";
@@ -114,6 +112,7 @@ export default function AnimalHandlersManagement() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Save (Post/Put) باستخدام Axios
   const handleSave = async () => {
     if (!validate()) return;
 
@@ -128,50 +127,55 @@ export default function AnimalHandlersManagement() {
 
     try {
       let url = `${API_BASE_URL}/api/animalhandlers`;
-      let method = "POST";
 
       if (formData.id) {
-        url = `${API_BASE_URL}/api/animalhandlers/${formData.id}`;
-        method = "PUT";
-      }
-
-      const res = await fetch(url, {
-        method: method,
-        body: fd,
-      });
-
-      if (res.ok) {
-        setIsModalOpen(false);
-        fetchHandlers();
-        showAlert(
-          "success", 
-          formData.id ? "Profile Updated" : "Handler Registered", 
-          `${formData.name} has been saved successfully.`
-        );
+        // حالة التعديل (PUT)
+        const res = await axios.put(`${url}/${formData.id}`, fd);
+        if (res.status === 200 || res.status === 204) {
+          onSuccessSave();
+        }
       } else {
-        showAlert("error", "Error", "Failed to save data. Please try again.");
+        // حالة الإضافة (POST)
+        const res = await axios.post(url, fd);
+        if (res.status === 200 || res.status === 201) {
+          onSuccessSave();
+        }
       }
     } catch (err) {
       console.error("Failed to save handler:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      showAlert(
+        "error",
+        "Connection Error",
+        "Server is unreachable or returned an error.",
+      );
     }
   };
 
+  // وظيفة مساعدة لتقليل تكرار الكود بعد الحفظ
+  const onSuccessSave = () => {
+    setIsModalOpen(false);
+    fetchHandlers();
+    showAlert(
+      "success",
+      formData.id ? "Profile Updated" : "Handler Registered",
+      `${formData.name} has been saved successfully.`,
+    );
+  };
+
+  // Delete باستخدام Axios
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/animalhandlers/${handlerToDelete.id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
+      const res = await axios.delete(
+        `${API_BASE_URL}/api/animalhandlers/${handlerToDelete.id}`,
+      );
+      if (res.status === 200 || res.status === 204) {
         setIsDeleteModalOpen(false);
         fetchHandlers();
         showAlert("success", "Deleted", "Handler profile has been removed.");
-      } else {
-        showAlert("error", "Error", "Failed to delete handler.");
       }
     } catch (err) {
       console.error("Failed to delete handler:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      showAlert("error", "Error", "Failed to delete handler.");
     }
   };
 
@@ -180,7 +184,11 @@ export default function AnimalHandlersManagement() {
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
         <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
-          <Alert variant={alert.variant} title={alert.title} message={alert.message} />
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+          />
         </div>
       )}
 
@@ -206,10 +214,10 @@ export default function AnimalHandlersManagement() {
           {handlers.map((handler) => (
             <div
               key={handler.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-5 gap-4"
+              className="flex flex-col  sm:flex-row text-center sm:text-start sm:items-center justify-between p-5 gap-4"
             >
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
                   {handler.imageUrl ? (
                     <img
                       src={`${API_BASE_URL}${handler.imageUrl}`}
@@ -221,8 +229,10 @@ export default function AnimalHandlersManagement() {
                   )}
                 </div>
                 <div>
-                  <h5 className="font-semibold text-gray-800">{handler.name}</h5>
-                  <div className="flex items-center gap-2 mt-1">
+                  <h5 className="font-semibold text-gray-800">
+                    {handler.name}
+                  </h5>
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                       {handler.title}
                     </span>
@@ -421,7 +431,7 @@ export default function AnimalHandlersManagement() {
                   onClick={handleSave}
                   className="px-8 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 cursor-pointer"
                 >
-                  {formData.id ? "Update Profile" : "Save Profile"}
+                  {formData.id ? "Update" : "Save"}
                 </button>
               </div>
             </form>

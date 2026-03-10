@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; // استيراد أكسيوس
 import { API_BASE_URL } from "../../../config/api";
 import Alert from "../../ui/Alert";
 
@@ -8,7 +9,7 @@ export default function ClientSupportManagement() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [staffToDelete, setStaffToDelete] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  
+
   // حالة الـ Alert
   const [alert, setAlert] = useState(null);
 
@@ -33,12 +34,11 @@ export default function ClientSupportManagement() {
     image: null,
   });
 
-  // المسار المطلوب: /api/administrators
+  // جلب البيانات باستخدام Axios
   const fetchSupportStaff = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/administrators`);
-      const data = await res.json();
-      setSupportStaff(data);
+      const res = await axios.get(`${API_BASE_URL}/api/administrators`);
+      setSupportStaff(res.data); // أكسيوس يضع البيانات في data
     } catch (err) {
       console.error("Failed to fetch support staff:", err);
     }
@@ -102,9 +102,6 @@ export default function ClientSupportManagement() {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Full Name is required";
     if (!formData.role.trim()) newErrors.role = "Job Title is required";
-    if (!formData.education.trim()) newErrors.education = "Education is required";
-    if (!formData.about.trim()) newErrors.about = "Bio is required";
-    if (!formData.areasOfFocus.trim()) newErrors.areasOfFocus = "Skills/Focus areas are required";
 
     if (!formData.id && !imageFile) {
       newErrors.image = "Profile photo is required";
@@ -127,51 +124,46 @@ export default function ClientSupportManagement() {
     if (imageFile) fd.append("image", imageFile);
 
     try {
-      let url = `${API_BASE_URL}/api/administrators`;
-      let method = "POST";
-
+      let res;
       if (formData.id) {
-        url = `${API_BASE_URL}/api/administrators/${formData.id}`;
-        method = "PUT";
+        // تحديث باستخدام PUT
+        res = await axios.put(
+          `${API_BASE_URL}/api/administrators/${formData.id}`,
+          fd,
+        );
+      } else {
+        // إضافة باستخدام POST
+        res = await axios.post(`${API_BASE_URL}/api/administrators`, fd);
       }
 
-      const res = await fetch(url, {
-        method: method,
-        body: fd,
-      });
-
-      if (res.ok) {
+      if (res.status === 200 || res.status === 201) {
         setIsModalOpen(false);
         fetchSupportStaff();
         showAlert(
-          "success", 
-          formData.id ? "Profile Updated" : "Staff Registered", 
-          `${formData.name} has been saved successfully.`
+          "success",
+          formData.id ? "Profile Updated" : "Staff Registered",
+          `${formData.name} has been saved successfully.`,
         );
-      } else {
-        showAlert("error", "Error", "Failed to save data. Please try again.");
       }
     } catch (err) {
       console.error("Failed to save staff:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      showAlert("error", "Error", "Failed to save data. Please try again.");
     }
   };
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/administrators/${staffToDelete.id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
+      const res = await axios.delete(
+        `${API_BASE_URL}/api/administrators/${staffToDelete.id}`,
+      );
+      if (res.status === 200 || res.status === 204) {
         setIsDeleteModalOpen(false);
         fetchSupportStaff();
         showAlert("success", "Deleted", "Staff profile has been removed.");
-      } else {
-        showAlert("error", "Error", "Failed to delete staff member.");
       }
     } catch (err) {
       console.error("Failed to delete staff:", err);
-      showAlert("error", "Connection Error", "Server is unreachable.");
+      showAlert("error", "Error", "Failed to delete staff member.");
     }
   };
 
@@ -180,7 +172,11 @@ export default function ClientSupportManagement() {
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
         <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
-          <Alert variant={alert.variant} title={alert.title} message={alert.message} />
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+          />
         </div>
       )}
 
@@ -206,10 +202,10 @@ export default function ClientSupportManagement() {
           {supportStaff.map((staff) => (
             <div
               key={staff.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-5 gap-4"
+              className="flex flex-col  sm:flex-row text-center sm:text-start sm:items-center justify-between p-5 gap-4"
             >
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+              <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
                   {staff.imageUrl ? (
                     <img
                       src={`${API_BASE_URL}${staff.imageUrl}`}
@@ -222,7 +218,7 @@ export default function ClientSupportManagement() {
                 </div>
                 <div>
                   <h5 className="font-semibold text-gray-800">{staff.name}</h5>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                       {staff.title}
                     </span>
@@ -257,7 +253,9 @@ export default function ClientSupportManagement() {
           <div className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-fadeIn">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
               <h3 className="text-lg font-bold text-gray-800">
-                {formData.id ? "Edit Support Profile" : "Register New Support Staff"}
+                {formData.id
+                  ? "Edit Support Profile"
+                  : "Register New Support Staff"}
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
@@ -421,7 +419,7 @@ export default function ClientSupportManagement() {
                   onClick={handleSave}
                   className="px-8 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 cursor-pointer"
                 >
-                  {formData.id ? "Update Profile" : "Save Profile"}
+                  {formData.id ? "Update" : "Save"}
                 </button>
               </div>
             </form>
@@ -433,8 +431,18 @@ export default function ClientSupportManagement() {
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
           <div className="bg-white w-full max-w-sm rounded-2xl p-8 text-center shadow-2xl animate-scaleIn">
             <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-red-100">
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              <svg
+                className="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
               </svg>
             </div>
             <h3 className="text-xl font-bold text-gray-800">Remove Staff</h3>

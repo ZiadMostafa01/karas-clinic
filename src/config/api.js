@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://karasclinic.runasp.net";
+export const API_BASE_URL = "http://karasclinic.runasp.net";

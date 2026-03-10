@@ -207,9 +207,9 @@ export default function DoctorManagement() {
           {doctors.map((doctor) => (
             <div
               key={doctor.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between p-5 gap-4"
+              className="flex flex-col  sm:flex-row text-center sm:text-start sm:items-center justify-between p-5 gap-4"
             >
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center gap-4">
                 <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
                   {doctor.imageUrl ? (
                     <img
@@ -223,7 +223,7 @@ export default function DoctorManagement() {
                 </div>
                 <div>
                   <h5 className="font-semibold text-gray-800">{doctor.name}</h5>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 mt-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                       {doctor.title}
                     </span>
