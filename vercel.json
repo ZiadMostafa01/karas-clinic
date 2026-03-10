@@ -6,7 +6,7 @@
     },
     {
       "source": "/images/:path*", 
-      "destination": "http://karasclinic.runasp.net/images/:path*"
+      "destination": "http://karasclinic.runasp.net/uploads/:path*"
     },
     {
       "source": "/(.*)",
