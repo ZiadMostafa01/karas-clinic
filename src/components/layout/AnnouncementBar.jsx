@@ -55,7 +55,7 @@ const AnnouncementBar = () => {
 
       {/* Content */}
       <div className="flex flex-col items-center text-center relative z-10">
-        <h3 className="text-lg md:text-xl font-bold flex items-center gap-2 mb-1 tracking-tight">
+        <h3 className="text-lg md:text-xl font-bold flex items-center gap-2 mb-1 tracking-tight whitespace-pre-line">
           {announcement.title}
         </h3>
         <p className="text-sm md:text-base font-medium opacity-90 leading-relaxed whitespace-pre-line">
