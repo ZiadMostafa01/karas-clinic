@@ -19,9 +19,9 @@ function Landing() {
           VETERINARY EXCELLENCE
         </span>
 
-        <h1 className="text-4xl sm:text-5xl md:text-8xl font-extrabold text-gray-900 leading-tight">
+        <h1 className="font-heading text-4xl sm:text-5xl md:text-8xl font-extrabold  text-gray-900 leading-tight">
           This is how we
-          <span className="text-5xl sm:text-6xl md:text-9xl font-heading block text-[var(--karas_aubergine)] italic">
+          <span className="text-6xl sm:text-7xl md:text-[140px]  block text-[var(--karas_aubergine)] italic">
             care{" "}
           </span>
         </h1>

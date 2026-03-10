@@ -31,8 +31,8 @@ function Home() {
       <Landing />
       <FeatureBar />
       <ServicesCards
-        title="This Is How We Care"
-        subtitle="Our Areas of Care"
+        title="Our Areas of Care"
+        subtitle=""
         data={homeServices}
       />
       <PetCareSection />
