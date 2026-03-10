@@ -3,16 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Karas Veterinary Clinic - Comprehensive Care for Your Pets</title>
-    <link rel="icon" href="./src/assets/images/logo.png" />
-    <!-- font awesome -->
+
+    <title>Karas Veterinary Clinic - Professional Care for Your Pets</title>
+    <meta
+      name="title"
+      content="Karas Veterinary Clinic - Professional Care for Your Pets"
+    />
+    <meta
+      name="description"
+      content="Karas Clinic provides high-quality veterinary care, medical surgery, vaccinations, and pet grooming. Book your appointment today for your furry friends."
+    />
+    <meta
+      name="keywords"
+      content="Veterinary, Clinic, Pets, Karas, Animal Care, Surgery, Vaccinations, Egypt, Pet Grooming"
+    />
+    <meta name="author" content="Karas Clinic" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://karas-clinic.vercel.app/" />
+    <meta
+      property="og:title"
+      content="Karas Veterinary Clinic - Professional Care"
+    />
+    <meta
+      property="og:description"
+      content="High-quality veterinary care, surgery, and grooming for your beloved pets."
+    />
+    <meta
+      property="og:image"
+      content="https://karas-clinic.vercel.app/og-image.jpg"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://karas-clinic.vercel.app/" />
+    <meta property="twitter:title" content="Karas Veterinary Clinic" />
+    <meta
+      property="twitter:description"
+      content="High-quality veterinary care, surgery, and grooming for your beloved pets."
+    />
+    <meta
+      property="twitter:image"
+      content="https://karas-clinic.vercel.app/og-image.jpg"
+    />
+
+    <link rel="icon" type="image/png" href="./src/assets/images/logo.png" />
+    <link rel="apple-touch-icon" href="./src/assets/images/logo.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <!-- google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
     <!-- Source Sans 3 Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
@@ -23,7 +66,84 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap"
       rel="stylesheet"
     />
-    
+    <link rel="canonical" href="https://karas-clinic.vercel.app/" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VeterinaryCare",
+        "name": "Karas Veterinary Clinic",
+        "image": "https://karas-clinic.vercel.app/src/assets/images/logo.png",
+        "url": "https://www.karasvet.com/",
+        "telephone": "+97145756444",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Jumeirah Bay X3 Tower, Cluster X, Jumeirah Lake Towers",
+          "addressLocality": "Dubai",
+          "addressCountry": "AE"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday"
+            ],
+            "opens": "08:00",
+            "closes": "20:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Sunday",
+            "opens": "09:00",
+            "closes": "20:00"
+          }
+        ],
+        "containsPlace": [
+          {
+            "@type": "VeterinaryCare",
+            "name": "Karas Veterinary Clinic - JLT Branch",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "S06-07, Jumeirah Bay X3 Tower, Cluster X, JLT",
+              "addressLocality": "Dubai",
+              "addressCountry": "AE"
+            },
+            "telephone": "+97145756444"
+          },
+          {
+            "@type": "VeterinaryCare",
+            "name": "Karas Veterinary Clinic - Downtown Branch",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "G08, Bay Avenue Mall, Business Bay",
+              "addressLocality": "Dubai",
+              "addressCountry": "AE"
+            },
+            "telephone": "+97145756444",
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "opens": "10:00",
+              "closes": "17:00"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
