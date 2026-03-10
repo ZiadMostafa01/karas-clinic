@@ -314,7 +314,7 @@ function Contact() {
               <div className="flex justify-center gap-2">
                 <a
                   href="https://www.instagram.com/karasvetdxb/"
-                  className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white hover:-translate-y-2 transition duration-300 p-4 rounded-full"
+                  className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white hover:-translate-y-1 transition duration-300 p-4 rounded-full"
                 >
                   <svg
                     aria-hidden="true"
@@ -328,7 +328,7 @@ function Contact() {
                 <a
                   href="https://www.linkedin.com/company/karas-vet-clinic/"
                   target="_blank"
-                  className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white  hover:-translate-y-2 transition duration-300 p-4 rounded-full"
+                  className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white  hover:-translate-y-1 transition duration-300 p-4 rounded-full"
                 >
                   <svg
                     aria-hidden="true"

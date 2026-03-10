@@ -21,7 +21,7 @@ function Footer() {
               <a
                 href="https://www.instagram.com/karasvetdxb/"
                 target="_blank"
-                className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white hover:-translate-y-2 transition duration-300 p-2 rounded-full"
+                className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white hover:-translate-y-1 transition duration-300 p-2 rounded-full"
               >
                 <svg
                   aria-hidden="true"
@@ -35,7 +35,7 @@ function Footer() {
               <a
                 href="https://www.linkedin.com/company/karas-vet-clinic/"
                 target="_blank"
-                className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white  hover:-translate-y-2 transition duration-300 p-2 rounded-full"
+                className="bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white  hover:-translate-y-1 transition duration-300 p-2 rounded-full"
               >
                 <svg
                   aria-hidden="true"
