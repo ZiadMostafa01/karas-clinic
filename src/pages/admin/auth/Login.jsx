@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import { useAuth } from "../../../context/admin/AuthContext";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { API_BASE_URL } from "../../../config/api";
 import logo from "@/assets/images/Logo_main_light.png";
 import logoDark from "@/assets/images/Logo_main.png";
+import Alert from "../../../components/ui/Alert"; // استيراد الأليرت
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [alert, setAlert] = useState(null); // حالة الأليرت
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -16,44 +20,78 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await axios.post(
+        `${API_BASE_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
 
-      if (res.ok) {
-        const data = await res.json();
+      if (res.status === 200 || res.status === 201) {
+        const data = res.data;
         login(data.token, rememberMe, data.user);
         navigate("/admin");
-      } else {
-        alert("Invalid email or password!");
       }
     } catch (err) {
       console.error("Login failed:", err);
-      alert("Could not connect to server!");
+
+      let errorMessage = "An error occurred during login.";
+      if (err.response) {
+        errorMessage =
+          err.response.data?.message || "Invalid email or password!";
+      } else if (err.request) {
+        errorMessage =
+          "Could not connect to server! Please check your connection.";
+      }
+
+      // إظهار الأليرت بدلاً من alert المتصفح
+      setAlert({
+        variant: "error",
+        title: "Login Error",
+        message: errorMessage,
+      });
+
+      // إخفاء الأليرت تلقائياً بعد 3 ثوانٍ
+      setTimeout(() => setAlert(null), 3000);
     }
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-[var(--karas_paper)] p-4 font-sans">
+      {/* عرض الأليرت هنا */}
+      {alert && (
+        <div className="fixed top-20 right-3 sm:right-5 z-[1100] w-full max-w-xs animate-fadeIn">
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+          />
+        </div>
+      )}
+
       <div className="flex w-full max-w-[1100px] h-[650px] bg-white rounded-3xl overflow-hidden shadow-2xl transition-all duration-500">
+        {/* Side Panel (Desktop) */}
         <div className="hidden lg:flex lg:w-1/2 bg-[var(--karas_aubergine)] p-12 flex-col justify-center relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--karas_aubergine_ink)] rounded-full -mr-32 -mt-32 opacity-50" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--karas_aubergine_ink)] rounded-full -ml-32 -mb-32 opacity-50" />
           <div className="relative z-10">
             <div className="bg-white/10 p-6 rounded-2xl backdrop-blur-md border border-white/10">
-              <img src={logo} alt="" />
+              <img src={logo} alt="Karas Logo Light" />
             </div>
           </div>
         </div>
 
+        {/* Form Panel */}
         <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-white">
           <div className="max-w-md mx-auto w-full">
             <img
               src={logoDark}
               className="lg:hidden pb-6 w-60 mx-auto"
-              alt=""
+              alt="Karas Logo Dark"
             />
             <h3 className="text-3xl font-bold text-[var(--karas_aubergine)] mb-2 tracking-tight">
               Welcome Back
@@ -84,7 +122,9 @@ const Login = () => {
               </div>
 
               <div className="space-y-2">
-               
+                <label className="text-sm font-semibold text-gray-700">
+                  Password
+                </label>
                 <div className="relative">
                   <Lock
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
@@ -119,10 +159,13 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="w-full bg-[var(--karas_aubergine)] text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--karas_aubergine_ink)] transition-all transform active:scale-[0.98] shadow-lg shadow-purple-900/20"
+                className="group cursor-pointer w-full bg-[var(--karas_aubergine)] text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[var(--karas_aubergine_ink)] transition-all transform active:scale-[0.98] shadow-lg shadow-purple-900/20"
               >
                 Sign In
-                <ArrowRight size={18} />
+                <ArrowRight
+                  size={18}
+                  className="transition-transform group-hover:translate-x-1"
+                />{" "}
               </button>
             </form>
 
