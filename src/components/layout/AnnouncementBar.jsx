@@ -66,7 +66,7 @@ const AnnouncementBar = () => {
       {/* Close Button */}
       <button
         onClick={handleClose}
-        className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 border border-white/20 rounded-full cursor-pointer p-1.5 hover:bg-black/20 transition-colors z-20"
+        className="absolute left-3 md:left-5 top-1/4 -translate-y-1/2 border border-white/20 rounded-full cursor-pointer p-1.5 hover:bg-black/20 transition-colors z-20"
         aria-label="Close announcement"
       >
         <X size={18} />
