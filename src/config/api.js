@@ -1,1 +1,5 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://karasclinic.runasp.net";
+const isLocal = window.location.hostname === "localhost";
+
+export const API_BASE_URL = isLocal 
+  ? "http://karasclinic.runasp.net" 
+  : "https://karasclinic.runasp.net";
