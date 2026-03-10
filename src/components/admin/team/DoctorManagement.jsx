@@ -8,7 +8,7 @@ export default function DoctorManagement() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [doctorToDelete, setDoctorToDelete] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  
+
   // حالة الـ Alert
   const [alert, setAlert] = useState(null);
 
@@ -104,7 +104,8 @@ export default function DoctorManagement() {
     if (!formData.role.trim()) newErrors.role = "Role/Title is required";
     // if (!formData.education.trim()) newErrors.education = "Education is required";
     if (!formData.about.trim()) newErrors.about = "Bio is required";
-    if (!formData.areasOfFocus.trim()) newErrors.areasOfFocus = "Focus areas are required";
+    if (!formData.areasOfFocus.trim())
+      newErrors.areasOfFocus = "Focus areas are required";
 
     if (!formData.id && !imageFile) {
       newErrors.image = "Profile photo is required";
@@ -145,9 +146,9 @@ export default function DoctorManagement() {
         fetchDoctors();
         // إظهار تنبيه النجاح
         showAlert(
-          "success", 
-          formData.id ? "Profile Updated" : "Doctor Registered", 
-          `${formData.name} has been saved successfully.`
+          "success",
+          formData.id ? "Profile Updated" : "Doctor Registered",
+          `${formData.name} has been saved successfully.`,
         );
       } else {
         showAlert("error", "Error", "Failed to save data. Please try again.");
@@ -160,9 +161,12 @@ export default function DoctorManagement() {
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/doctors/${doctorToDelete.id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/api/doctors/${doctorToDelete.id}`,
+        {
+          method: "DELETE",
+        },
+      );
       if (res.ok) {
         setIsDeleteModalOpen(false);
         fetchDoctors();
@@ -180,8 +184,12 @@ export default function DoctorManagement() {
     <div className="font-sans relative">
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
-        <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
-          <Alert variant={alert.variant} title={alert.title} message={alert.message} />
+        <div className="fixed top-20 right-3 sm:right-5 z-[1100] w-full max-w-xs animate-fadeIn">
+          <Alert
+            variant={alert.variant}
+            title={alert.title}
+            message={alert.message}
+          />
         </div>
       )}
 

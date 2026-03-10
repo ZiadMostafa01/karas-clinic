@@ -61,22 +61,31 @@ export default function AnnouncementManagement() {
     setIsDeleteModalOpen(true);
   };
 
-  // دالة تفعيل إعلان معين
   const handleSetActive = async (announcement) => {
     try {
-      // نرسل الإعلان مع جعل isActive قيمتها true
-      // ملاحظة: الـ Backend يجب أن يتولى تعطيل الباقي أو يمكنك عمل ذلك يدوياً إذا لزم الأمر
+      // 1. تحديث الـ UI فوراً عشان المستخدم يحس بالسرعة
+      const updatedAnnouncements = announcements.map((item) => ({
+        ...item,
+        isActive: item.id === announcement.id, // هيخلي اللي اخترناه true والباقي false
+      }));
+      setAnnouncements(updatedAnnouncements);
+
+      // 2. إرسال الطلب للـ Backend
+      // ملاحظة: لو الباك اند مش بيقفل الباقي تلقائياً، لازم تطلب من المبرمج يعمل كدة
       const payload = { ...announcement, isActive: true };
       await axios.put(
         `${API_BASE_URL}/api/Announcements/${announcement.id}`,
         payload,
       );
 
+      showAlert("success", "Activated", "New announcement is now live!");
+
+      // 3. إعادة السحب للتأكد من البيانات النهائية من السيرفر
       fetchAnnouncements();
-      showAlert("success", "Activated", "This announcement is now live!");
     } catch (err) {
       console.error("Activation error:", err);
-      showAlert("error", "Error", "Failed to activate announcement.");
+      showAlert("error", "Error", "Failed to activate. Reverting...");
+      fetchAnnouncements(); // لو فشل نرجع البيانات القديمة
     }
   };
 
@@ -155,7 +164,7 @@ export default function AnnouncementManagement() {
   return (
     <div className="font-sans relative">
       {alert && (
-        <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
+        <div className="fixed top-20 right-3 sm:right-5 z-[1100] w-full max-w-xs animate-fadeIn">
           <Alert
             variant={alert.variant}
             title={alert.title}
@@ -192,7 +201,7 @@ export default function AnnouncementManagement() {
           {announcements.map((item) => (
             <div
               key={item.id}
-              className={`flex flex-col sm:flex-row justify-between p-5 gap-4 hover:bg-gray-50/50 transition-colors ${item.isActive ? "border-l-4 border-[var(--karas_aubergine)] bg-purple-50/20" : ""}`}
+              className={`flex flex-col sm:flex-row justify-between p-5 gap-4 transition-colors ${item.isActive ? "border-l-4 border-y-0 border-[var(--karas_aubergine)] bg-purple-50" : ""}`}
             >
               <div className="flex gap-4">
                 <div
@@ -313,7 +322,7 @@ export default function AnnouncementManagement() {
                   onClick={handleSave}
                   className="px-8 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 cursor-pointer transition-all"
                 >
-                  {formData.id ? "Update Announcement" : "Publish"}
+                  {formData.id ? "Update" : "Publish"}
                 </button>
               </div>
             </form>

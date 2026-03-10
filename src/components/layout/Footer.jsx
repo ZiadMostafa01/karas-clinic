@@ -76,19 +76,19 @@ function Footer() {
           <div>
             <h3 className="font-semibold mb-4">Resources</h3>
             <div className="flex flex-col gap-2 text-gray-400 text-sm">
-              <Link to="/contact" className=" hover:text-white transition">
+              <Link to="/" className=" hover:text-white transition">
                 Client Registration
               </Link>
-              <Link to="/pcr-testing" className=" hover:text-white transition">
+              <Link to="/" className=" hover:text-white transition">
                 DM Registration
               </Link>
-              <Link to="/pcr-testing" className=" hover:text-white transition">
+              <Link to="/" className=" hover:text-white transition">
                 TNR Form
               </Link>
-              <Link to="/pcr-testing" className=" hover:text-white transition">
+              <Link to="/" className=" hover:text-white transition">
                 Karas Vet Shop
               </Link>
-              <Link to="/pcr-testing" className=" hover:text-white transition">
+              <Link to="/" className=" hover:text-white transition">
                 Keep it operational but grouped cleanly.
               </Link>
             </div>

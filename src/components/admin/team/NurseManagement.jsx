@@ -165,7 +165,7 @@ export default function NurseManagement() {
     <div className="font-sans relative">
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
-        <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
+        <div className="fixed top-20 right-3 sm:right-5 z-[1100] w-full max-w-xs animate-fadeIn">
           <Alert
             variant={alert.variant}
             title={alert.title}
@@ -199,7 +199,7 @@ export default function NurseManagement() {
               className="flex flex-col  sm:flex-row text-center sm:text-start sm:items-center justify-between p-5 gap-4"
             >
               <div className="flex flex-col sm:flex-row items-center gap-4">
-              <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
+                <div className="h-12 w-12 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center border border-gray-200">
                   {nurse.imageUrl ? (
                     <img
                       src={`${API_BASE_URL}${nurse.imageUrl}`}

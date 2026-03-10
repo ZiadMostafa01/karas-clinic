@@ -87,7 +87,6 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      <ChatBot />
     </>
   );
 }

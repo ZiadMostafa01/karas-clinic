@@ -12,26 +12,22 @@ const AnnouncementBar = () => {
     const fetchAnnouncement = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/Announcements`);
-        const announcements = response.data;
+        const activeAnnouncement = response.data.find(
+          (item) => item.isActive === true,
+        );
 
-        if (announcements && announcements.length > 0) {
-          // البحث عن الإعلان الذي حالته isActive تساوي true
-          const activeAnnouncement = announcements.find(
-            (item) => item.isActive === true,
-          );
+        if (activeAnnouncement) {
+          const closedId = localStorage.getItem("closed_announcement_id");
 
-          if (activeAnnouncement) {
-            const closedId = localStorage.getItem("closed_announcement_id");
-
-            // إظهار الإعلان فقط إذا لم يقم المستخدم بإغلاقه سابقاً
-            if (closedId !== activeAnnouncement.id.toString()) {
-              setAnnouncement(activeAnnouncement);
-              setIsVisible(true);
-            }
+          // لو الـ ID اللي جاي من السيرفر مش هو اللي المستخدم قفله قبل كدة، أظهره
+          if (closedId !== activeAnnouncement.id.toString()) {
+            setAnnouncement(activeAnnouncement);
+            setIsVisible(true);
           } else {
-            // في حال لا يوجد أي إعلان نشط، نضمن اختفاء البار
-            setIsVisible(false);
+            setIsVisible(false); // لو هو هو اللي اتقفل، يفضل مختفي
           }
+        } else {
+          setIsVisible(false);
         }
       } catch (error) {
         console.error("Error fetching announcement:", error);

@@ -28,7 +28,7 @@ function DoctorDetails() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--karas_paper)] italic">
-        Loading doctor details...
+        Loading staff details...
       </div>
     );
   }
@@ -40,6 +40,11 @@ function DoctorDetails() {
       </div>
     );
   }
+
+  // دالة مساعدة للتأكد أن الحقل يحتوي على نص حقيقي وليس null أو فارغ
+  const hasContent = (field) => {
+    return field && field !== "null" && field.trim() !== "";
+  };
 
   return (
     <div className="bg-[var(--karas_paper)] min-h-screen pt-[79.05px] px-6 md:px-24">
@@ -63,25 +68,32 @@ function DoctorDetails() {
           </p>
 
           <div className="space-y-8">
-            <section>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-[#999] border-b border-[#d1cdc2] mb-4 pb-1">
-                Areas of focus
-              </h3>
-              <p className="text-gray-600 italic leading-relaxed">
-                {doctor.areasOfFocus}
-              </p>
-            </section>
+            {/* Areas of Focus - تظهر فقط إذا وجد محتوى */}
+            {hasContent(doctor.areasOfFocus) && (
+              <section>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#999] border-b border-[#d1cdc2] mb-4 pb-1">
+                  Areas of focus
+                </h3>
+                <p className="text-gray-600 italic leading-relaxed">
+                  {doctor.areasOfFocus}
+                </p>
+              </section>
+            )}
 
-            <section>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-[#999] border-b border-[#d1cdc2] mb-4 pb-1">
-                About
-              </h3>
-              <p className="text-gray-600 leading-relaxed italic">
-                {doctor.about}
-              </p>
-            </section>
+            {/* About - تظهر فقط إذا وجد محتوى */}
+            {hasContent(doctor.about) && (
+              <section>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-[#999] border-b border-[#d1cdc2] mb-4 pb-1">
+                  About
+                </h3>
+                <p className="text-gray-600 leading-relaxed italic">
+                  {doctor.about}
+                </p>
+              </section>
+            )}
 
-            {doctor.education && (
+            {/* Education / Certifications - تظهر فقط إذا وجد محتوى */}
+            {hasContent(doctor.education) && (
               <section>
                 <h3 className="text-xs font-bold uppercase tracking-widest text-[#999] border-b border-[#d1cdc2] mb-4 pb-1">
                   Education / Certifications

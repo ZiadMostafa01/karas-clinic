@@ -171,7 +171,7 @@ export default function ClientSupportManagement() {
     <div className="font-sans relative">
       {/* عرض التنبيه في أعلى الصفحة */}
       {alert && (
-        <div className="fixed top-20 right-5 z-[1100] w-full max-w-md animate-fadeIn">
+        <div className="fixed top-20 right-3 sm:right-5 z-[1100] w-full max-w-xs animate-fadeIn">
           <Alert
             variant={alert.variant}
             title={alert.title}
