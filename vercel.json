@@ -1,16 +1,8 @@
 {
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "http://karasclinic.runasp.net/api/:path*"
-    },
-    {
-      "source": "/images/:path*", 
-      "destination": "http://karasclinic.runasp.net/uploads/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ]
-}
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ]
+  }
