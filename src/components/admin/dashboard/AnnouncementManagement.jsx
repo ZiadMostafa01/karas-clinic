@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../../config/api";
 import Alert from "../../ui/Alert";
-import { X, Megaphone, Trash2, Edit3, Plus, CheckCircle2 } from "lucide-react";
+import {
+  X,
+  Megaphone,
+  Trash2,
+  Edit3,
+  Plus,
+  CheckCircle2,
+  PowerOff,
+} from "lucide-react";
 
 export default function AnnouncementManagement() {
   const [announcements, setAnnouncements] = useState([]);
@@ -61,17 +69,47 @@ export default function AnnouncementManagement() {
     setIsDeleteModalOpen(true);
   };
 
+  // وظيفة لتعطيل الكل
+  const handleDeactivateAll = async () => {
+    const activeItem = announcements.find((item) => item.isActive);
+
+    if (!activeItem) {
+      showAlert("info", "Note", "No active announcement to deactivate.");
+      return;
+    }
+
+    try {
+      // 1. تحديث الـ UI فوراً (كلهم false)
+      setAnnouncements(
+        announcements.map((item) => ({ ...item, isActive: false })),
+      );
+
+      // 2. إرسال طلب التحديث للـ Backend للعنصر اللي كان شغال
+      const payload = { ...activeItem, isActive: false };
+      await axios.put(
+        `${API_BASE_URL}/api/Announcements/${activeItem.id}`,
+        payload,
+      );
+
+      showAlert("success", "Deactivated", "All announcements are now hidden.");
+      fetchAnnouncements();
+    } catch (err) {
+      console.error("Deactivation error:", err);
+      showAlert("error", "Error", "Failed to deactivate. Reverting...");
+      fetchAnnouncements();
+    }
+  };
+
   const handleSetActive = async (announcement) => {
     try {
-      // 1. تحديث الـ UI فوراً عشان المستخدم يحس بالسرعة
+      // 1. تحديث الـ UI فوراً
       const updatedAnnouncements = announcements.map((item) => ({
         ...item,
-        isActive: item.id === announcement.id, // هيخلي اللي اخترناه true والباقي false
+        isActive: item.id === announcement.id,
       }));
       setAnnouncements(updatedAnnouncements);
 
       // 2. إرسال الطلب للـ Backend
-      // ملاحظة: لو الباك اند مش بيقفل الباقي تلقائياً، لازم تطلب من المبرمج يعمل كدة
       const payload = { ...announcement, isActive: true };
       await axios.put(
         `${API_BASE_URL}/api/Announcements/${announcement.id}`,
@@ -79,13 +117,11 @@ export default function AnnouncementManagement() {
       );
 
       showAlert("success", "Activated", "New announcement is now live!");
-
-      // 3. إعادة السحب للتأكد من البيانات النهائية من السيرفر
       fetchAnnouncements();
     } catch (err) {
       console.error("Activation error:", err);
       showAlert("error", "Error", "Failed to activate. Reverting...");
-      fetchAnnouncements(); // لو فشل نرجع البيانات القديمة
+      fetchAnnouncements();
     }
   };
 
@@ -105,7 +141,7 @@ export default function AnnouncementManagement() {
       id: formData.id || 0,
       title: formData.title,
       description: formData.description,
-      isActive: formData.isActive || false, // الحفاظ على الحالة الحالية أو false للجديد
+      isActive: formData.isActive || false,
     };
 
     try {
@@ -137,11 +173,7 @@ export default function AnnouncementManagement() {
       }
     } catch (err) {
       console.error("Save error:", err);
-      showAlert(
-        "error",
-        "Error",
-        "Failed to save announcement. Check console for details.",
-      );
+      showAlert("error", "Error", "Failed to save announcement.");
     }
   };
 
@@ -184,12 +216,21 @@ export default function AnnouncementManagement() {
               Manage what users see in the top bar
             </p>
           </div>
-          <button
-            onClick={handleAddNew}
-            className="cursor-pointer flex items-center gap-2 bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-colors shadow-sm"
-          >
-            <Plus size={18} /> Add New Announcement
-          </button>
+          <div className="flex flex-col lg:flex-row  gap-2">
+            {/* زر تعطيل الكل */}
+            <button
+              onClick={handleDeactivateAll}
+              className="cursor-pointer flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-medium text-sm transition-colors border border-gray-200"
+            >
+              <PowerOff size={18} /> Deactivate All
+            </button>
+            <button
+              onClick={handleAddNew}
+              className="cursor-pointer flex items-center gap-2 bg-[var(--karas_aubergine)] hover:bg-[var(--karas_aubergine_ink)] text-white px-5 py-2.5 rounded-xl font-medium text-sm transition-colors shadow-sm"
+            >
+              <Plus size={18} /> Add New
+            </button>
+          </div>
         </div>
 
         <div className="divide-y divide-gray-100">
