@@ -58,7 +58,7 @@ const AnnouncementBar = () => {
         <h3 className="text-lg md:text-xl font-bold flex items-center gap-2 mb-1 tracking-tight">
           {announcement.title}
         </h3>
-        <p className="text-sm md:text-base font-medium opacity-90 leading-relaxed">
+        <p className="text-sm md:text-base font-medium opacity-90 leading-relaxed whitespace-pre-line">
           {announcement.description}
         </p>
       </div>
